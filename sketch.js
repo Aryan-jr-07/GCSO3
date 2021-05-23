@@ -1,47 +1,33 @@
-var car1,wall1,wall2,wall3,wall4;
-var speed;
+var car,wall;
+var speed,width;
 
 function setup() {
-  createCanvas(800,400);
+  createCanvas(1600,400);
   speed = random(50,90);
-  //width = random(400,1500);
-  car1 = createSprite(50,random(50,370),25,11);
-  car1.velocityX = 9;
-  ///wall
-  wall1 = createSprite(770,60,20,40);
-  wall2 = createSprite(770,150,20,40);
-  wall3 = createSprite(770,250,20,40);
-  wall4 = createSprite(770,360,20,40);
+  width = random(400,1500); 
+
+  car = createSprite(50,180,40,20);
+  car.velocityX = speed;
+  car.shapeColor =  "green";
+
+  wall = createSprite(1500,200,60,height/2);
+  wall.shapeColor = color(80,80,80);
 }
 
 function draw() {
   background("black");  
 
-  isTouching();
+  if(wall.x-car.x < (car.width+wall.width)/2){
+    car.velocityX = 0;
+    var deformation = 0.5 * width * speed * speed/22509;
+    if(deformation > 180){
+      car.shapeColor = "yellow";
+    }
+    if(deformation > 100){
+      car.shapeColor = "red";
+    }
 
+  }
 
   drawSprites();
-}
-
-function isTouching(){
-  if(car1.x - wall1.x < wall1.width/2 + car1.width/2 &&
-    wall1.x - car1.x < wall1.width/2 + car1.width/2){
-    car1.shapeColor = "green";
-    car1.velocityX = 0;
-  }
-  if(car1.x - wall2.x < wall2.width/2 + car1.width/2 &&
-    wall2.x - car1 < wall2.width/2 + car1.width/2){
-      car1.shapeColor = "blue";
-      car1.velocityX = 0;
-    }
-  if(car1.x - wall3.x < wall3.width/2 + car1.width/2 &&
-    wall3.x - car1.x < wall3.width/2 + car1.width/2){
-      car1.shapeColor = "red";
-      car1.velocityX = 0;
-      }
-  if(car1.x - wall4.x < wall4.width/2 + car1.width/2 &&
-    wall4.x - car1.x < wall4.width/2 + car1.width/2){
-      car1.shapeColor = "yellow";
-      car1.velocityX = 0;  
-  }   
 }
